@@ -1,0 +1,73 @@
+/* 
+  File: styles.css
+  Author: Run Liu (lr0826@bu.edu), 9/9/2025
+  Description: The css file for styling the html pages
+*/
+
+
+.site-header { background: var(--panel); padding: 0.75rem 1rem; }
+.site-header h1 { margin: 0 0 .25rem; font-size: 1.25rem; }
+
+.site-nav, .site-nav ul {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;   
+}
+.site-nav a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  opacity: .9;
+}
+.site-nav a:hover { opacity: 1; text-decoration: underline; }
+
+/* === LAYOUT (center content, readable width) === */
+html, body { height: 100%; }
+body {
+  display: flex; flex-direction: column; min-height: 100vh;
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}
+.content {
+  flex: 1;
+  display: flex; justify-content: center; align-items: flex-start;
+  padding: 2rem 1rem;
+}
+.content > * { width: 100%; max-width: 920px; margin-inline: auto; }
+
+
+/* Force quote page images to be same size */
+img {
+  width: 100%;              /* scale with page */
+  max-width: 1000px;         /* never get wider than 600px */
+  aspect-ratio: 16 / 15;     /* lock shape (like a video frame) */
+  height: auto;             /* let aspect-ratio control height */
+  object-fit: cover;        /* crop instead of stretching */
+  border-radius: 12px;
+  display: block;
+  margin: 1rem auto;        /* center with spacing */
+  box-shadow: 0 4px 16px rgba(0,0,0,.35);
+}
+
+
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: .9rem;
+}
+.image-cell img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  background: #000;
+}
+
+
+
+

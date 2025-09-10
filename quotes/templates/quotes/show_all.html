@@ -1,0 +1,31 @@
+<!--File: show_all.html
+ Author: Run Liu (lr0826@bu.edu), 9/9/2025
+Description: the show all html file that shows all the images and quotes-->
+{%extends 'quotes/base.html' %}
+    {% block content %}
+    <main>
+        <section>
+            <h2>All Quotes</h2>
+            <ul class="quote-list">
+              {% for q in quotes %}
+                <li>“{{ q }}”</li>
+              {% empty %}
+                <li>No quotes yet.</li>
+              {% endfor %}
+            </ul>
+          </section>
+        
+          <section>
+            <h2>All Images</h2>
+            <div class="image-grid">
+              {% for img in images %}
+                <div class="image-cell">
+                  <img src="{{ img }}" alt="Shakespeare">
+                </div>
+              {% empty %}
+                <p>No images yet.</p>
+              {% endfor %}
+            </div>
+          </section>
+    </main>
+    {% endblock %}
