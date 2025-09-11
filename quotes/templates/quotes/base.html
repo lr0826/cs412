@@ -1,30 +1,27 @@
 <!--File: base.html
  Author: Run Liu (lr0826@bu.edu), 9/9/2025
 Description: the base template for quote.html, about.html and show_all.html-->
+<!DOCTYPE html>
 {% load static %}
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>{% block title %}Quote of the Day Shakespeare{% endblock %}</title>
-        {% load static %}
+        <title>William Shakespeare Quote of the Day</title>
         <link rel="stylesheet" href="{% static 'styles.css' %}">
-      </head>
-      <body>
-        <header class="site-header">
-          <h1>Quote of the Day</h1>
-          <nav class="site-nav">
+    </head>
+    <body>
+        <h1>William Shakespeare Quote of the Day</h1>
+        <nav class="site-nav">
             <a href="{% url 'quote_page' %}">Quote of the Day</a>
             <a href="{% url 'show_all_page' %}">Show All</a>
             <a href="{% url 'about_page' %}">About</a>
-          </nav>
-        </header>
-      
+        </nav>
         <main class="content">
           {% block content %}{% endblock %}
         </main>
       
-        <footer class="site-footer">
+        <footer>
           <p>Page created by lr0826@bu.edu. Generated at: {{ time }}</p>
         </footer>
-      </body>
+    </body>
 </html>
