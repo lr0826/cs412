@@ -7,11 +7,12 @@ Description: the show all html file that shows all the images and quotes-->
     <main>
         <section>
             <h2>All Quotes</h2>
-            <ul class="quote-list">
+            <ul>
+              <!--Loop through the "quotes" list passed from the view -->
               {% for q in quotes %}
-                <li>“{{ q }}”</li>
+                <li>“{{ q }}”</li> <!-- Each quote becomes a list item-->
               {% empty %}
-                <li>No quotes yet.</li>
+                <li>No quotes yet.</li> <!--Fallback if "quotes" list is empty-->
               {% endfor %}
             </ul>
           </section>
@@ -19,12 +20,12 @@ Description: the show all html file that shows all the images and quotes-->
           <section>
             <h2>All Images</h2>
             <div class="image-grid">
-              {% for img in images %}
+              {% for img in images %} <!--Loop through the images list passed from the view -->
                 <div class="image-cell">
-                  <img src="{{ img }}" alt="Shakespeare">
+                  <img src="{{ img }}" alt="Shakespeare"><!-- Each image becomes a img file-->
                 </div>
               {% empty %}
-                <p>No images yet.</p>
+                <p>No images yet.</p> <!--Fallback if image list is empty-->
               {% endfor %}
             </div>
           </section>
