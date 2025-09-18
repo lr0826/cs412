@@ -1,0 +1,56 @@
+<!--File: order.html
+ Author: Run Liu (lr0826@bu.edu), 9/16/2025
+Description: the order html file for the Mi Xue restaurant page-->
+<!DOCTYPE html>
+{%extends 'restaurant/base.html' %}
+    {% block content %}
+    <div class="confirmation-container"></div>
+        <main>
+            
+            <h2>Confirmation</h2>
+            Thank you for your order!
+            <h4>Your order will be ready at : {{ready_at}}
+            </h4>    
+            <p></p>
+            
+            <p>
+            </p><h3>Your order is confirmed:</h3>
+            
+            <ul>
+            
+                <p>
+                    {% for item in items %} <!--Loop over all the items for views.py, display heir names one by one-->
+                      {{ item.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                      (no items ordered)
+                    {% endfor %}
+            
+                </p>
+            
+            <h3>Special Instructions: {{special_instructions}}</h3>
+            
+            <p></p>
+            
+        
+            <p>
+            </p><h4>Total: {{total}}</h4>
+            <p></p>
+        
+            <p>
+            </p><h3>Customer Information:</h3>
+            <p>
+                
+                {{ customer.name }}, {{ customer.phone }}, {{ customer.email }}
+                <!-- include all the elements of the customer -->
+    
+        
+            </p>
+            <p></p>
+        
+        
+            
+        
+                </ul>
+        </main>
+    </div>
+    {% endblock %}

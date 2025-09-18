@@ -1,0 +1,25 @@
+ <!--File: base.html
+ Author: Run Liu (lr0826@bu.edu), 9/16/2025
+Description: the base template for restaurant-->
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Mixue Ice Cream & Tea</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <nav class="site-nav">
+            <a href="{% url 'main' %}">Main Page</a>
+            <a href="{% url 'order' %}">Order Page</a>
+        </nav>
+        <main class="content">
+          {% block content %}{% endblock %}
+        </main>
+      
+        <footer>
+          <p>Page created by lr0826@bu.edu. Generated at: {{ time }}</p>
+        </footer>
+    </body>
+</html>

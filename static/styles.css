@@ -1,53 +1,108 @@
 /* 
   File: styles.css
-  Author: Run Liu (lr0826@bu.edu), 9/9/2025
+  Author: Run Liu (lr0826@bu.edu), 9/16/2025
   Description: The css file for styling the html pages
 */
 
-
-.site-nav, .site-nav ul {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  padding: 0;
+/* General page styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fafafa;
   margin: 0;
-  list-style: none;   
+  padding: 0;
+  line-height: 1.6;
 }
+
+/* Navigation bar */
+.site-nav {
+  background: #444;
+  padding: 10px;
+  display: flex;
+  gap: 1rem;
+}
+
 .site-nav a {
-  color: var(--accent);
+  color: #fff;
   text-decoration: none;
-  font-weight: 600;
-  opacity: .9;
-}
-.site-nav a:hover { opacity: 1; text-decoration: underline; }
-
-
-
-/* Force quote page images to be same size */
-img {
-  width: 100%;              /* scale with page */
-  max-width: 1000px;         /* never get wider than 600px */
-  aspect-ratio: 16 / 15;     /* lock shape (like a video frame) */
-  height: auto;             /* let aspect-ratio control height */
-  object-fit: cover;        /* crop instead of stretching */
-  border-radius: 12px;
-  display: block;
-  margin: 1rem auto;        /* center with spacing */
-  box-shadow: 0 4px 16px rgba(0,0,0,.35);
+  font-weight: bold;
 }
 
-
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: .9rem;
+.site-nav a:hover {
+  text-decoration: underline;
 }
-.image-cell img {
+
+/* Main content */
+.content {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  background: #fff;
+  border-radius: 8px;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  color: #444;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 10px;
-  display: block;
-  background: #000;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
+
+input[type="submit"] {
+  background: #444;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background: #666;
+}
+
+/* Confirmation page */
+.confirmation-container, main {
+  margin-top: 20px;
+}
+
+.confirmation-container ul, main ul {
+  list-style: none;
+  padding: 0;
+}
+
+.confirmation-container li, main li {
+  background: #f4f4f4;
+  margin: 4px 0;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+/* Footer */
+footer {
+  margin-top: 30px;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #777;
+  border-top: 1px solid #ddd;
+}
+
+
+
 

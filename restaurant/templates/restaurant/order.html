@@ -1,0 +1,44 @@
+<!--File: order.html
+ Author: Run Liu (lr0826@bu.edu), 9/16/2025
+Description: the order html file for the Mi Xue restaurant page-->
+<!DOCTYPE html>
+{%extends 'restaurant/base.html' %}
+    {% block content %}
+    <main>
+        <form action="{% url 'confirmation' %}" method="POST">
+            {% csrf_token %}
+            <p>
+            </p><h3>Select your Items:</h3>
+            <div><input type="checkbox" name="Lemonwater">Lemon Water $4</div>
+            <div><input type="checkbox" name="Milktea">Bubble Milk Tea $5</div>
+            <div><input type="checkbox" name="Juice"> Big Juicy Juice $6</div>     
+            <div><input type="checkbox" name="Gmilktea"> Green Tea Milk Tea $2</div>    
+            <p></p>
+    
+            <p>
+            </p><h3>Today's Special:</h3>
+            <div><input type="checkbox" name="special">{{special}}</div>
+            <p></p>
+            
+            <p>
+            </p><h3>Special Instructions</h3>
+            Please share any special instructions:
+            <div><textarea name="special_instructions" rows="3" cols="60"></textarea></div>
+            <p></p>
+            <p>
+            </p><h3>Customer Information</h3>
+    
+            <div>Name:</div> <div><input name="name"></div>
+            <div>Phone:</div> <div><input name="phone"></div>
+    
+            <div>Email:</div> <div><input name="email"></div>
+            <p></p>
+    
+            <p>
+            </p><h3>Place your order!</h3>
+            <input type="submit">        
+            <p></p>
+    
+        </form>
+    </main>
+    {% endblock %}
