@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'hw', #NEW
     'quotes', #ASSIGNMENT 1
     'restaurant', #ASSIGNMENT 2
+    'mini_insta', #ASSIGNMENT 3
 ]
 
 MIDDLEWARE = [
