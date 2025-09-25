@@ -6,16 +6,19 @@ Description: the base template for Profiles-->
 <html>
     <head>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        <link rel="stylesheet" href="{% static 'styles_profile.css' %}">
     </head>
     <body>
-        <nav class="site-nav">
+        <article>
             <a href="{% url 'show_all_profiles' %}">Home Page</a>
-        </nav>
-        <main class="content">
-            <h1>showing all profiles</h1>
-            {% block content %}{% endblock %}
-        </main>
-      
+            
+            <main class="content">
+                
+                {% block content %}{% endblock %}
+            </main>
+        </article>
+        <footer>
+            <a href="{% url 'show_all_profiles' %}">Home Page</a>
+          </footer>
     </body>
 </html>

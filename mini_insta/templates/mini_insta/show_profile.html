@@ -1,0 +1,25 @@
+<!--File: show_profile.html
+ Author: Run Liu (lr0826@bu.edu), 9/24/2025
+Description: the show_profile html file-->
+<!DOCTYPE html>
+{%extends 'mini_insta/base.html' %}
+    {% block content %}
+    <!--{{profiles}} -->
+    <div>
+        <div>
+            <h2>{{profile.display_name}}</h2>
+        </div>
+        <p>
+            Username: {{profile.username}} <br>
+            Join Date: {{profile.join_date}} <br>
+        </p>
+        <h2>Bio</h2>
+        <p>
+            {{profile.bio_text}}
+            
+        </p>
+        <div class="profpic">
+            <img src="{{profile.profile_image_url}}" alt="">
+        </div>
+    </div>
+    {% endblock %}

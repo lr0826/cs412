@@ -5,17 +5,10 @@ Description: the show_all_profiles html file-->
 {%extends 'mini_insta/base.html' %}
     {% block content %}
     <!--{{profiles}} -->
+    <h1>Mini-Insta: showing all profiles</h1>
     <div>
         {% for profile in profiles %}
-        <div>
-            <h2>{{profile.display_name}}</h2>
-        </div>
-        {{profile.username}}
-        <p>
-            {{profile.bio_text}}
-            
-            
-        </p>
+        <a href="{% url 'show_profile' profile.pk %}">
         <img src="{{profile.profile_image_url}}" alt="">
         
         {% endfor %}
