@@ -21,5 +21,19 @@ Description: the show_profile html file-->
         <div class="profpic">
             <img src="{{profile.profile_image_url}}" alt="">
         </div>
+        <h2> Posts </h2>
+        {% for post in profile.get_all_posts %}
+
+            {% with first_photo=post.get_all_photos.first %}
+                {% if first_photo %}
+                    <a href="{% url 'show_post' post.pk %}">
+                    <img src="{{first_photo.image_url}}" alt="">
+                {% else %}
+                    <a href="{% url 'show_post' post.pk %}">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png?20250720084638" alt="Not found">
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+        
     </div>
     {% endblock %}

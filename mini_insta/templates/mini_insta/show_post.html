@@ -1,0 +1,26 @@
+<!--File: show_post.html
+ Author: Run Liu (lr0826@bu.edu), 9/30/2025
+Description: the show_post html file-->
+<!DOCTYPE html>
+{%extends 'mini_insta/base.html' %}
+    {% block content %}
+    
+
+        
+        <table>
+            <h1>{{post.caption}}</h1>
+            
+            <h2>Posted on {{post.timestamp}}</h2>
+            
+            {% with first_photo=post.get_all_photos.first %}
+                {% if first_photo %}
+                    {% for pic in post.get_all_photos %}
+                    <img src="{{ pic.image_url }}" alt="">
+                    {% endfor %}
+                {% else %}
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png?20250720084638" alt="Not found">
+                {% endif %}
+            {% endwith %}
+        </table>
+        
+    {% endblock %}
