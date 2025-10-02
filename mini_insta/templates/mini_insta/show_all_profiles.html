@@ -4,8 +4,10 @@ Description: the show_all_profiles html file-->
 <!DOCTYPE html>
 {%extends 'mini_insta/base.html' %}
     {% block content %}
-    <!--{{profiles}} -->
-    <h1>Mini-Insta: showing all profiles</h1>
+    <header>
+        <h2>Mini-Insta: showing all profiles</h2>
+    </header>
+    
     <div>
         {% for profile in profiles %}
         <a href="{% url 'show_profile' profile.pk %}">

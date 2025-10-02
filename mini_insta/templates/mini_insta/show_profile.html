@@ -5,12 +5,14 @@ Description: the show_profile html file-->
 {%extends 'mini_insta/base.html' %}
     {% block content %}
     <!--{{profiles}} -->
+    <header>
+        <h2>Mini-Insta: @{{profile.username}}</h2>
+    </header>
     <div>
-        <div>
+        <div id="name">
             <h2>{{profile.display_name}}</h2>
         </div>
         <p>
-            Username: {{profile.username}} <br>
             Join Date: {{profile.join_date}} <br>
         </p>
         <h2>Bio</h2>

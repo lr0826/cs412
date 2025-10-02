@@ -2,7 +2,7 @@
 # Author: Run Liu (lr0826@bu.edu), 9/23/2025
 # Description: The models python file for the mini_insta application
 from django.db import models
-
+from django.urls import reverse
 # Create your models here.
 class Profile(models.Model):
     ''' model the data attributes of an individual user.'''
@@ -30,6 +30,9 @@ class Post(models.Model):
         ''' find and return all Photos for a given Post. '''
         photos = Photo.objects.filter(post=self)
         return photos
+    def get_absolute_url(self):
+        ''' return to the post url to display '''
+        return reverse("show_post", kwargs={'pk':self.pk})
 class Photo(models.Model):
     ''' model the data attributes of an image associated with a Post '''
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

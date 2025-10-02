@@ -1,0 +1,24 @@
+<!--File: create_post_form.html
+ Author: Run Liu (lr0826@bu.edu), 9/30/2025
+Description: the create_post_form html file-->
+<!DOCTYPE html>
+{%extends 'mini_insta/base.html' %}
+    {% block content %}
+    <header>
+        <h2>Post: @{{profile.username}}</h2>
+        <a href="{% url 'show_profile' profile.pk %}">
+            <img src="https://cdn-icons-png.flaticon.com/512/93/93634.png" style="width:70px; height:70px;">
+        </a>
+    </header>
+    <h1> Create a new Post </h1>
+    <form action="{% url 'create_post' profile.pk %} " method = 'POST'>
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+            Image Url:
+                <input type="url" name="image_url">
+        </table>
+        <input type = "submit" name = "submit" value = "Submit">
+    </form>
+    
+    {% endblock %}
