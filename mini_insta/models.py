@@ -36,11 +36,25 @@ class Post(models.Model):
 class Photo(models.Model):
     ''' model the data attributes of an image associated with a Post '''
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    image_url = models.TextField(blank=False)
+    image_url = models.TextField(blank=True)
     timestamp = models.DateTimeField(auto_now=True)
+    image_file = models.ImageField(blank=True)
     def __str__(self):
         ''' return the string representation of this Photo instance '''
-        return f'{self.image_url}'
+        if self.image_file:
+            return self.image_file.name
+        else:
+            return f'{self.image_url}'
+    def get_image_url(self):
+        ''' return the URL to the image. This URL will either be the URL stored 
+        in the image_url attribute (if it exists), or else the URL to 
+        the image_file attribute, i.e., image_file.url. '''
+        if self.image_file:
+            return self.image_file.url
+        else:
+            return self.image_url
+        
+
 
 
 

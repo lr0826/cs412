@@ -5,7 +5,6 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from .models import *
 from .forms import CreatePostForm
-from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -32,29 +31,41 @@ class PostDetailView(DetailView):
     
 
 class CreatePostView(CreateView):
-    ''' A view to handle creation of a new Post 
-    displat the html form to user
-    process the form submission and store the new post object'''
+    """Create a new Post for a given Profile, then attach any uploaded Photos."""
     form_class = CreatePostForm
-    template_name =  "mini_insta/create_post_form.html"
+    template_name = "mini_insta/create_post_form.html"
+
     def get_context_data(self, **kwargs):
-        ''' context data that provide access to the profile data '''
-        ctx = super().get_context_data(**kwargs)
-        ctx["profile"] = get_object_or_404(Profile, pk=self.kwargs["pk"])
-        ctx["hide_create_button"] = True
-        return ctx
+        """Add the parent Profile to the template context (no get_object_or_404)."""
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs['pk']                 
+        profile = Profile.objects.get(pk=pk)   
+        context['profile'] = profile
+        context['hide_create_button'] = True
+        return context
+
     def form_valid(self, form):
-        '''set FK by id without querying Profile'''
-        # (a) attach the Profile to the Post before saving
-        profile = get_object_or_404(Profile, pk=self.kwargs["pk"])
-        form.instance.profile = profile
+        """Attach FK (Profile) before saving, then create Photo rows for uploaded files."""
+        print(f"CreatePostView.form_valid: form.cleaned_data={form.cleaned_data}")
 
-        # save the Post (self.object becomes the saved Post)
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)   
+        form.instance.profile = profile        
+
+        # Save the Post (self.object becomes the saved Post)
         response = super().form_valid(form)
+        files = self.request.FILES.getlist("files")
+        print("DEBUG CreatePostView:", "num_files=", len(files), "names=", [f.name for f in files])
 
-        # (b) create a Photo from the extra image_url input
-        image_url = (self.request.POST.get("image_url") or "").strip()
-        if image_url:
-            Photo.objects.create(post=self.object, image_url=image_url)
+        # Create Photo objects from uploaded files (input name="files")
+        files = self.request.FILES.getlist('files')
+        for f in files:
+            Photo.objects.create(post=self.object, image_file=f)
 
         return response
+
+
+    def get_success_url(self):
+        """Where to go after creating the Post (adjust to your URL names)."""
+        # Example: go to the newly created Post's page
+        return reverse('show_post', kwargs={'pk': self.object.pk})

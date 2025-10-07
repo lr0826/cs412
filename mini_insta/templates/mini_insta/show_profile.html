@@ -29,7 +29,7 @@ Description: the show_profile html file-->
             {% with first_photo=post.get_all_photos.first %}
                 {% if first_photo %}
                     <a href="{% url 'show_post' post.pk %}">
-                    <img src="{{first_photo.image_url}}" alt="">
+                    <img src="{{first_photo.get_image_url}}" alt="">
                 {% else %}
                     <a href="{% url 'show_post' post.pk %}">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png?20250720084638" alt="Not found">

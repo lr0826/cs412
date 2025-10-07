@@ -11,12 +11,11 @@ Description: the create_post_form html file-->
         </a>
     </header>
     <h1> Create a new Post </h1>
-    <form action="{% url 'create_post' profile.pk %} " method = 'POST'>
+    <form action="{% url 'create_post' profile.pk %} " method = 'POST' enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             {{form.as_table}}
-            Image Url:
-                <input type="url" name="image_url">
+            <input type="file" name="files" multiple>
         </table>
         <input type = "submit" name = "submit" value = "Submit">
     </form>
