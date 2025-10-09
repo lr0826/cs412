@@ -6,7 +6,7 @@ Description: the show_profile html file-->
     {% block content %}
     <!--{{profiles}} -->
     <header>
-        <h2>Mini-Insta: @{{profile.username}}</h2>
+        <h2>Mini-Insta-Username: @{{profile.username}}</h2>
     </header>
     <div>
         <div id="name">
@@ -23,6 +23,9 @@ Description: the show_profile html file-->
         <div class="profpic">
             <img src="{{profile.profile_image_url}}" alt="">
         </div>
+        <h3>
+            <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+        </h3>
         <h2> Posts </h2>
         {% for post in profile.get_all_posts %}
 

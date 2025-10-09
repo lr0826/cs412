@@ -2,9 +2,9 @@
 # Author: Run Liu (lr0826@bu.edu), 9/23/2025
 # Description: The view python file for the mini-insta application
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import *
-from .forms import CreatePostForm
+from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 
 # Create your views here.
 
@@ -69,3 +69,25 @@ class CreatePostView(CreateView):
         """Where to go after creating the Post (adjust to your URL names)."""
         # Example: go to the newly created Post's page
         return reverse('show_post', kwargs={'pk': self.object.pk})
+class UpdateProfileView(UpdateView):
+    ''' view class to handle update of profile based on its PK '''
+    model = Profile
+    form_class = UpdateProfileForm
+    template_name = "mini_insta/update_profile_form.html"
+    
+class DeletePostView(DeleteView):
+    ''' View class to delete a post on a profile '''
+    model = Post
+    template_name = "mini_insta/delete_post_form.html"
+    def get_success_url(self):
+        ''' Return the URL to redirect to after a successful delete. '''
+        #find the pk for this post
+        pk = self.kwargs['pk']
+        post = Post.objects.get(pk=pk)
+        profile = post.profile
+        return reverse('show_profile', kwargs={'pk':profile.pk})
+class UpdatePostView(UpdateView):
+    ''' view class to handle update of post based on its PK '''
+    model = Post
+    form_class = UpdatePostForm
+    template_name = "mini_insta/update_post_form.html"

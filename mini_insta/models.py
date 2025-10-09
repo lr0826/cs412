@@ -18,6 +18,9 @@ class Profile(models.Model):
         ''' find and return all Posts for a given Profile. '''
         posts = Post.objects.filter(profile=self).order_by('-timestamp')
         return posts
+    def get_absolute_url(self):
+        ''' return to the profile url to display '''
+        return reverse("show_profile", kwargs={'pk':self.pk})
 class Post(models.Model):
     '''model the data attributes of an Instagram post'''
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
