@@ -27,6 +27,13 @@ Description: the show_post html file-->
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png?20250720084638" alt="Not found">
                 {% endif %}
             {% endwith %}
+            
         </table>
-        
+            Liked by @{{post.get_likes.first.profile.username}} and {{post.get_num_likes}} others
+            {% for com in post.get_all_comments %}
+                <div id="texts">
+                    @<strong>{{com.profile.username}}</strong> {{com}}
+                </div>
+            {% endfor %}
+      
     {% endblock %}

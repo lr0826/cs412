@@ -1,0 +1,17 @@
+<!--File: show_followers.html
+ Author: Run Liu (lr0826@bu.edu), 10/16/2025
+Description: the show_followers html file-->
+<!DOCTYPE html>
+{%extends 'mini_insta/base.html' %}
+    {% block content %}
+        <header>
+            <h2>Who's following {{profile.username}} {{profile.display_name}}</h2>
+            <a href="{% url 'show_profile' profile.pk %}">
+                <img src="https://cdn-icons-png.flaticon.com/512/93/93634.png" style="width:70px; height:70px;">
+            </a>
+        </header>
+        {% for prof in profile.get_followers %}
+
+            <img src="{{prof.profile_image_url}}" alt="">
+        {% endfor %}
+    {% endblock %}

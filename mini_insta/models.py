@@ -21,6 +21,29 @@ class Profile(models.Model):
     def get_absolute_url(self):
         ''' return to the profile url to display '''
         return reverse("show_profile", kwargs={'pk':self.pk})
+    def get_followers(self):
+        """
+        Return a list of Profile objects who follow THIS profile.
+        Uses: Follow.objects.filter(profile=self)
+        """
+        follows = Follow.objects.filter(profile=self)           # Follow rows where I'm being followed
+        return [f.follower_profile for f in follows]            # list of Profiles
+
+    def get_num_followers(self):
+        """Return the count of followers."""
+        return Follow.objects.filter(profile=self).count()
+
+    def get_following(self):
+        """
+        Return a list of Profile objects that THIS profile follows.
+        Uses: Follow.objects.filter(follower_profile=self)
+        """
+        follows = Follow.objects.filter(follower_profile=self)  # Follow rows where I'm the follower
+        return [f.profile for f in follows]                     # list of Profiles
+
+    def get_num_following(self):
+        """Return how many profiles this profile follows."""
+        return Follow.objects.filter(follower_profile=self).count()
 class Post(models.Model):
     '''model the data attributes of an Instagram post'''
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -36,6 +59,22 @@ class Post(models.Model):
     def get_absolute_url(self):
         ''' return to the post url to display '''
         return reverse("show_post", kwargs={'pk':self.pk})
+    def get_all_comments(self):
+        ''' retrive all comments on a Post '''
+        comments = Comment.objects.filter(post=self)           # comments that is related to this post
+        return comments
+    def get_likes(self):
+        """
+        Return a list of Like objects for this Post.
+        Uses the Django ORM explicitly (Like.objects.filter(...)).
+        """
+        likes = Like.objects.filter(post=self)
+        return likes
+    def get_num_likes(self):
+        '''  Return the number of likes on this Post (int).
+        '''
+        count = Like.objects.filter(post=self).count() - 1
+        return count
 class Photo(models.Model):
     ''' model the data attributes of an image associated with a Post '''
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -56,8 +95,40 @@ class Photo(models.Model):
             return self.image_file.url
         else:
             return self.image_url
-        
+class Follow(models.Model):
+    '''encapsulates the idea of an edge connecting two nodes within the social network'''
+    timestamp = models.DateTimeField(auto_now=True)
+    profile = models.ForeignKey(
+        "Profile",
+        on_delete=models.CASCADE,
+        related_name="profile"             # reverse accessor: who follows me
+    )
+    follower_profile = models.ForeignKey(
+        "Profile",
+        on_delete=models.CASCADE,
+        related_name="follower_profile"    # reverse accessor: who I follow
+    )
+    def __str__(self):
+        # Show readable names in admin/list pages
+        who = self.follower_profile.display_name
+        whom = self.profile.display_name
+        return f"{who} follows {whom}"
+class Comment(models.Model):
+    '''encapsulates the idea of one Profile providing a response or commentary on a Post.'''
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    text = models.TextField(blank=False)
+    def __str__(self):
+        # view this Comment as a string representation
+        return f"{self.text}"
 
-
-
+class Like(models.Model):
+    '''  encapsulates the idea of one Profile providing approval of a Post. '''
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        # view this like as a string representation
+        return f"{self.post.caption} liked by {self.profile.username}"
 

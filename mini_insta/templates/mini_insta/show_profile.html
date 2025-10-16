@@ -26,6 +26,16 @@ Description: the show_profile html file-->
         <h3>
             <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
         </h3>
+        <div id="profile-header">
+            <strong>{{profile.get_num_followers}}</strong>
+            <br>
+            <a href="{% url 'show_followers' profile.pk %}">followers</a>
+        </div>
+        <div id="profile-header">
+            <strong>{{profile.get_num_following}}</strong>
+            <br>
+            <a href="{% url 'show_following' profile.pk %}">following</a>
+        </div>
         <h2> Posts </h2>
         {% for post in profile.get_all_posts %}
 

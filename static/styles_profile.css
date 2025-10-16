@@ -67,10 +67,19 @@ footer {
     border-bottom: 1px vla;
     padding-bottom: 40px;
   }
-  
+  #profile-header {
+    background-color: var(--accent-light);
+    border-left: 4px solid var(--accent-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: inline-block;
+  }
   article p, article h3 {
     margin: 20px 10px;
   
+  }
+  #texts{
+    display: block;
   }
   #name{
     text-align: center;
