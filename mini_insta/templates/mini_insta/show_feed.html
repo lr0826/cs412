@@ -1,0 +1,67 @@
+<!--File: show_feed.html
+ Author: Run Liu (lr0826@bu.edu), 10/16/2025
+Description: the show_feed html file-->
+<!DOCTYPE html>
+{%extends 'mini_insta/base.html' %}
+    {% block content %}
+        <header style="display:flex;align-items:center;gap:12px;">
+            <a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
+            <h2>Feed for @{{ profile.username }}</h2>
+        </header>
+      
+        {% if profile.get_post_feed %}
+        <ul style="list-style:none;padding:0;margin:16px 0;">
+        {% for post in profile.get_post_feed%}
+        <li style="border:1px solid #ddd;border-radius:8px;padding:12px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <img src="{{ post.profile.profile_image_url }}" alt="{{ post.profile.username }}"
+                style="width:40px;height:40px;border-radius:50%;object-fit:cover;">
+            <div>
+                <strong>@{{ post.profile.username }}</strong><br>
+                <small>{{ post.timestamp }}</small>
+            </div>
+            </div>
+
+            {# first Photo of the Post #}
+            {% with photos=post.get_all_photos %}
+            {% if photos %}
+                {% with p=photos.0 %}
+                {% with src=p.get_image_url %}
+                    {% if src %}
+                    <div style="margin:8px 0;">
+                        <img src="{{ src }}" alt="post photo" style="max-width:100%;height:auto;border-radius:6px;">
+                    </div>
+                    {% endif %}
+                {% endwith %}
+                {% endwith %}
+            {% endif %}
+            {% endwith %}
+
+            <p style="margin:8px 0;"><strong>Likes: {{ post.get_num_likes }}</strong></p>
+            <p class="caption" style="margin:8px 0;">{{ post.caption }}</p>
+
+            <div class="comments" style="margin-top:8px;">
+            <h4 style="margin:6px 0;">Comments</h4>
+            <ul style="list-style:none;padding-left:0;margin:0;">
+                {% for c in post.get_all_comments %}
+                <li style="margin:4px 0;">
+                    <strong>@{{ c.profile.username }}</strong> — {{ c.text }}
+                </li>
+                {% empty %}
+                <li>No comments yet.</li>
+                {% endfor %}
+            </ul>
+            </div>
+
+            <div style="margin-top:8px;">
+            <a href="{% url 'show_post' post.pk %}">Open post</a>
+            </div>
+        </li>
+        {% endfor %}
+        </ul>
+        {% else %}
+    <p>Your feed is empty. Follow some profiles to see posts here.</p>
+    {% endif %}
+      
+    
+    {% endblock %}

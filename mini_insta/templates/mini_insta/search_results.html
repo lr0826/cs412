@@ -1,0 +1,57 @@
+<!--File: search_results.html
+ Author: Run Liu (lr0826@bu.edu), 10/16/2025
+Description: the search results html file-->
+{% extends "mini_insta/base.html" %}
+
+{% block content %}
+    <h2>Search results for: "{{ query }}"</h2>
+    <p><a href="{% url 'show_profile' profile.pk %}">Back to Profile</a></p>
+
+    <h3>Matching Profiles</h3>
+    <ul>
+    {% for p in profiles %}
+        <li>
+        <a href="{% url 'show_profile' p.pk %}">
+            <img src="{{ p.profile_image_url }}" alt="{{ p.username }}" width="40" height="40">
+        </a>
+        </li>
+    {% empty %}
+        <li>No matching profiles.</li>
+    {% endfor %}
+    </ul>
+
+    <h3>Matching Posts</h3>
+    <ul>
+    {% for post in posts %}
+        <li>
+        <div>
+            <a href="{% url 'show_profile' post.profile.pk %}">
+            <img src="{{ post.profile.profile_image_url }}" alt="{{ post.profile.username }}" style="width:80px;height:80px;border-radius:50%;">
+            @{{ post.profile.username }}
+            </a>
+            <span> — {{ post.timestamp }}</span>
+        </div>
+
+        {# first photo if any #}
+        {% with photos=post.get_all_photos %}
+            {% if photos %}
+            {% with p=photos.0 %}
+                {% with src=p.get_image_url %}
+                {% if src %}
+                    <div><img src="{{ src }}" alt="post photo" width="300"></div>
+                {% endif %}
+                {% endwith %}
+            {% endwith %}
+            {% endif %}
+        {% endwith %}
+
+        <p><strong>Likes: {{ post.get_num_likes }}</strong></p>
+        <p>{{ post.caption }}</p>
+
+        <p><a href="{% url 'show_post' post.pk %}">Open post</a></p>
+        </li>
+    {% empty %}
+        <li>No matching posts.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -18,7 +18,13 @@ Description: the base template for Profiles-->
         </article>
         
         <footer>
+            {% if profile %}
+            <a href="{% url 'show_feed' profile.pk %}"> <img src="https://img.favpng.com/15/23/6/house-home-computer-icons-clip-art-png-favpng-jLetcUrr130Sv6HHj1Btq9Tr4.jpg" style="width:80px; height:80px" ></a>
+            <a href="{% url 'show_profile' profile.pk %}"><img src="{{profile.profile_image_url}}" style="width:80px;height:80px;border-radius:50%;"></a>
+            <a href="{% url 'search' profile.pk %}"><img src="https://static.vecteezy.com/system/resources/thumbnails/009/652/218/small/magnifying-glass-icon-isolated-on-white-background-search-illustration-vector.jpg" style="width:80px;height:80px;border-radius:50%;"></a>
+            {% else %}
             <a href="{% url 'show_all_profiles' %}"> <img src="https://img.favpng.com/15/23/6/house-home-computer-icons-clip-art-png-favpng-jLetcUrr130Sv6HHj1Btq9Tr4.jpg" style="width:80px; height:80px" ></a>
+            {% endif %}
             {% if profile and not hide_create_button %}
             <a href="{% url 'create_post' profile.pk %}"><img src="https://png.pngtree.com/png-vector/20190419/ourmid/pngtree-vector-add-icon-png-image_956621.jpg" style="width:80px; height:80px;"></a>
             {% endif %}

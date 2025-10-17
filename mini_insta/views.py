@@ -36,7 +36,7 @@ class CreatePostView(CreateView):
     template_name = "mini_insta/create_post_form.html"
 
     def get_context_data(self, **kwargs):
-        """Add the parent Profile to the template context (no get_object_or_404)."""
+        """Add the parent Profile to the template context."""
         context = super().get_context_data(**kwargs)
         pk = self.kwargs['pk']                 
         profile = Profile.objects.get(pk=pk)   
@@ -103,3 +103,44 @@ class ShowFollowingDetailView(DetailView):
     model = Profile
     template_name = "mini_insta/show_following.html"
     context_object_name = "profile"
+class PostFeedListView(ListView):
+    ''' List View for the post feed '''
+    model = Post
+    template_name = "mini_insta/show_feed.html"
+    context_object_name = "posts"
+    def get_context_data(self, **kwargs):
+        """Add the parent Profile to the template context."""
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs['pk']                 
+        profile = Profile.objects.get(pk=pk)   
+        context['profile'] = profile
+        return context
+class SearchView(ListView):
+    ''' search view for the search function '''
+    template_name = "mini_insta/search_results.html"
+    context_object_name = "posts"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.viewer = Profile.objects.get(pk=self.kwargs["pk"])
+        self.query = (request.GET.get("q") or "").strip()
+        if not self.query:
+            return render(request, "mini_insta/search.html", {"profile": self.viewer})
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        # Posts where caption contains the query (case-insensitive)
+        return Post.objects.filter(caption__icontains=self.query).order_by("-timestamp")
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["profile"] = self.viewer
+        ctx["query"] = self.query
+
+  
+        p1 = Profile.objects.filter(username__icontains=self.query)
+        p2 = Profile.objects.filter(display_name__icontains=self.query)
+        p3 = Profile.objects.filter(bio_text__icontains=self.query)
+        ctx["profiles"] = (p1 | p2 | p3).distinct()
+       
+
+        return ctx

@@ -44,6 +44,18 @@ class Profile(models.Model):
     def get_num_following(self):
         """Return how many profiles this profile follows."""
         return Follow.objects.filter(follower_profile=self).count()
+    def get_post_feed(self):
+        """
+        Posts from the profiles THIS profile follows, newest first.
+        Reuses get_following() to get the followed Profile objects.
+        """
+
+        followed_profiles = self.get_following()          # list of profiles
+        if not followed_profiles:
+            return Post.objects.none()                    # empty QuerySet (nice for ListView)
+
+        followed_ids = [p.pk for p in followed_profiles]
+        return Post.objects.filter(profile_id__in=followed_ids).order_by("-timestamp")
 class Post(models.Model):
     '''model the data attributes of an Instagram post'''
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -73,8 +85,9 @@ class Post(models.Model):
     def get_num_likes(self):
         '''  Return the number of likes on this Post (int).
         '''
-        count = Like.objects.filter(post=self).count() - 1
+        count = Like.objects.filter(post=self).count()
         return count
+    
 class Photo(models.Model):
     ''' model the data attributes of an image associated with a Post '''
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

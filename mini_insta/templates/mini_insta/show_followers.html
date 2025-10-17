@@ -11,7 +11,8 @@ Description: the show_followers html file-->
             </a>
         </header>
         {% for prof in profile.get_followers %}
-
-            <img src="{{prof.profile_image_url}}" alt="">
+            <a href = "{% url 'show_profile' prof.pk %}">
+                <img src="{{prof.profile_image_url}}" alt="">
+            </a>
         {% endfor %}
     {% endblock %}
