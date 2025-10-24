@@ -6,7 +6,7 @@ Description: the search form html file-->
 {% block content %}
     <h2>Search</h2>
     <p><a href="{% url 'show_profile' profile.pk %}">Back to Profile</a></p>
-    <form method="get" action="{% url 'search' profile.pk %}">
+    <form method="get" action="{% url 'search' %}">
     <label for="q">Enter a search term:</label><br>
     <input id="q" type="text" name="q" />
     <button type="submit">Search</button>

@@ -24,7 +24,7 @@ Description: the show_profile html file-->
             <img src="{{profile.profile_image_url}}" alt="">
         </div>
         <h3>
-            <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+            <a href="{% url 'update_profile' %}">Update Profile</a>
         </h3>
         <div id="profile-header">
             <strong>{{profile.get_num_followers}}</strong>

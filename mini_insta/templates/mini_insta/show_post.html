@@ -14,9 +14,12 @@ Description: the show_post html file-->
             
             <h2>Posted on {{post.timestamp}}</h2>
             <article>
-                <a href="{% url 'delete_post' post.pk %}">Delete Post</a>
-                <p></p>
-                <a href="{% url 'update_post' post.pk %}">Update Post</a>
+                {% if request.user.is_authenticated and post.profile.user_id == request.user.id %}
+                    <a href="{% url 'delete_post' post.pk %}">Delete Post</a>
+                    <p></p>
+                    <a href="{% url 'update_post' post.pk %}">Update Post</a>
+                {% else %}
+                {% endif %}
             </article>
             {% with first_photo=post.get_all_photos.first %}
                 {% if first_photo %}

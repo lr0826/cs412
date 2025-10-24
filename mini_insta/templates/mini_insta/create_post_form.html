@@ -11,7 +11,7 @@ Description: the create_post_form html file-->
         </a>
     </header>
     <h1> Create a new Post </h1>
-    <form action="{% url 'create_post' profile.pk %} " method = 'POST' enctype="multipart/form-data">
+    <form action="{% url 'create_post' %} " method = 'POST' enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             {{form.as_table}}

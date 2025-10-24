@@ -3,6 +3,7 @@
 # Description: The models python file for the mini_insta application
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 # Create your models here.
 class Profile(models.Model):
     ''' model the data attributes of an individual user.'''
@@ -11,6 +12,7 @@ class Profile(models.Model):
     profile_image_url = models.URLField(blank=True)
     bio_text = models.TextField(blank=True)
     join_date = models.TextField(blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         ''' return the string representation of this model instance '''
         return f'{self.display_name}'

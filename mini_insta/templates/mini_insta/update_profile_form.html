@@ -7,7 +7,7 @@ Description: the update_profile_form html file-->
     <header>
         <h2>Update this Profile</h2>
     </header>
-    <form action="{% url 'update_profile' profile.pk %} " method = 'POST' enctype="multipart/form-data">
+    <form action="{% url 'update_profile' %} " method = 'POST' enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             {{form.as_table}}
