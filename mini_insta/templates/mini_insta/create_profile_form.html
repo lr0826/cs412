@@ -1,0 +1,40 @@
+<!--File: create_profile_form.html
+ Author: Run Liu (lr0826@bu.edu), 10/24/2025
+Description: the create_profile_form html file-->
+<!DOCTYPE html>
+{% extends "mini_insta/base.html" %}
+{% block content %}
+  <h1>Create your account & profile</h1>
+
+  <form method="post" action="{% url 'create_profile' %}">
+    {% csrf_token %}
+
+    <fieldset>
+      <legend>Account</legend>
+      {{ user_form.non_field_errors }}
+      <p>
+        {{ user_form.username.label_tag }}<br>
+        {{ user_form.username }}<br>
+        {{ user_form.username.errors }}
+      </p>
+      <p>
+        {{ user_form.password1.label_tag }}<br>
+        {{ user_form.password1 }}<br>
+        {{ user_form.password1.errors }}
+      </p>
+      <p>
+        {{ user_form.password2.label_tag }}<br>
+        {{ user_form.password2 }}<br>
+        {{ user_form.password2.errors }}
+      </p>
+    </fieldset>
+
+    <fieldset style="margin-top:1rem;">
+      <legend>Profile</legend>
+      {{ form.non_field_errors }}
+      {{ form.as_p }}
+    </fieldset>
+
+    <button type="submit">Create account & profile</button>
+  </form>
+{% endblock %}

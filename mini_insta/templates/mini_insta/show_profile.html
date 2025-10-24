@@ -24,7 +24,9 @@ Description: the show_profile html file-->
             <img src="{{profile.profile_image_url}}" alt="">
         </div>
         <h3>
+            {% if request.user.is_authenticated and viewer_profile and viewer_profile.pk == profile.pk %}
             <a href="{% url 'update_profile' %}">Update Profile</a>
+            {% endif %}
         </h3>
         <div id="profile-header">
             <strong>{{profile.get_num_followers}}</strong>
@@ -36,6 +38,21 @@ Description: the show_profile html file-->
             <br>
             <a href="{% url 'show_following' profile.pk %}">following</a>
         </div>
+        {% if request.user.is_authenticated and viewer_profile and viewer_profile.pk != profile.pk %}
+            {% if is_following %}
+                <form method="post" action="{% url 'delete_follow' profile.pk %}">
+                {% csrf_token %}
+                <button type="submit">Unfollow</button>
+                </form>
+            {% else %}
+                <form method="post" action="{% url 'follow' profile.pk %}">
+                {% csrf_token %}
+                <button type="submit">Follow</button>
+                </form>
+            {% endif %}
+        {% endif %}
+
+
         <h2> Posts </h2>
         {% for post in profile.get_all_posts %}
 

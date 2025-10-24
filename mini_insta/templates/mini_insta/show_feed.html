@@ -36,7 +36,21 @@ Description: the show_feed html file-->
                 {% endwith %}
             {% endif %}
             {% endwith %}
-
+            {% if request.user.is_authenticated and post.profile_id != profile.pk %}
+                {% if post.id in liked_post_ids %}
+                    <form method="post" action="{% url 'delete_like' post.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <button type="submit">Unlike</button>
+                    </form>
+                {% else %}
+                    <form method="post" action="{% url 'like' post.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <button type="submit">Like</button>
+                    </form>
+                {% endif %}
+            {% endif %}
             <p style="margin:8px 0;"><strong>Likes: {{ post.get_num_likes }}</strong></p>
             <p class="caption" style="margin:8px 0;">{{ post.caption }}</p>
 

@@ -24,6 +24,13 @@ urlpatterns = [
     path("logout/confirm", TemplateView.as_view(
         template_name="mini_insta/logged_out.html"
     ), name="logout_confirmation"),
+    path("create_profile", CreateProfileView.as_view(), name="create_profile"),
+    path("profile/<int:pk>/follow", FollowCreateView.as_view(), name="follow"),
+    path("profile/<int:pk>/delete_follow", FollowDeleteView.as_view(), name="delete_follow"),
 
+    # likes
+    path("post/<int:pk>/like", LikeCreateView.as_view(), name="like"),
+    path("post/<int:pk>/delete_like", LikeDeleteView.as_view(), name="delete_like"),
 
+    path("profile/", MyProfileDetailView.as_view(), name="profile"),
 ] 
