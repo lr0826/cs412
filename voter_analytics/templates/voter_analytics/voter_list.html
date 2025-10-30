@@ -1,0 +1,152 @@
+<!--File: voter_list.html
+ Author: Run Liu (lr0826@bu.edu), 10/28/2025
+Description: the listview for a list of voters-->
+{% extends "voter_analytics/base.html" %}
+
+{% block title %}Voters · Voter Analytics{% endblock %}
+
+{% block content %}
+
+    <!-- FILTER FORM -->
+    <section class="panel filter-form">
+        <form method="get">
+
+            <div class="filters-inline">
+                <!-- Party -->
+                <div>
+                    <label for="party">Party</label>
+                    <select name="party" id="party">
+                        <option value="">(any)</option>
+                        {% for p in party_options %}
+                            <option value="{{ p }}" {% if filter_party == p %}selected{% endif %}>{{ p }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Min DOB Year -->
+                <div>
+                    <label for="min_dob_year">Min Birth Year (>=)</label>
+                    <select name="min_dob_year" id="min_dob_year">
+                        <option value="">(none)</option>
+                        {% for y in dob_year_options %}
+                            <option value="{{ y }}" {% if filter_min_dob_year == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Max DOB Year -->
+                <div>
+                    <label for="max_dob_year">Max Birth Year (<=)</label>
+                    <select name="max_dob_year" id="max_dob_year">
+                        <option value="">(none)</option>
+                        {% for y in dob_year_options %}
+                            <option value="{{ y }}" {% if filter_max_dob_year == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Voter Score -->
+                <div>
+                    <label for="voter_score">Voter Score</label>
+                    <select name="voter_score" id="voter_score">
+                        <option value="">(any)</option>
+                        {% for s in score_options %}
+                            <option value="{{ s }}" {% if filter_voter_score == s|stringformat:"s" %}selected{% endif %}>{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="filters-inline checkbox-group" style="margin-top:1rem;">
+                <div>
+                    <label>
+                        <input type="checkbox" name="v20state" value="1" {{ filter_v20state }}>
+                        Voted in 2020 State
+                    </label>
+                    <label>
+                        <input type="checkbox" name="v21town" value="1" {{ filter_v21town }}>
+                        Voted in 2021 Town
+                    </label>
+                    <label>
+                        <input type="checkbox" name="v21primary" value="1" {{ filter_v21primary }}>
+                        Voted in 2021 Primary
+                    </label>
+                    <label>
+                        <input type="checkbox" name="v22general" value="1" {{ filter_v22general }}>
+                        Voted in 2022 General
+                    </label>
+                    <label>
+                        <input type="checkbox" name="v23town" value="1" {{ filter_v23town }}>
+                        Voted in 2023 Town
+                    </label>
+                </div>
+            </div>
+
+            <div class="button-row">
+                <button type="submit">Apply Filters</button>
+                <a class="reset-link" href="{% url 'voters' %}">Reset</a>
+            </div>
+
+        </form>
+    </section>
+
+    <!-- RESULTS LIST -->
+    <section class="panel">
+        {% for voter in voters %}
+            <div class="voter-row">
+                <div class="voter-left">
+                    <div>
+                        <strong>
+                            <a href="{% url 'voter' voter.pk %}">
+                                {{ voter.first_name }} {{ voter.last_name }}
+                            </a>
+                        </strong>
+                    </div>
+                    <div>
+                        {{ voter.residential_street_number }} {{ voter.residential_street_name }}
+                        {% if voter.residential_apartment_number %}
+                            Apt {{ voter.residential_apartment_number }}
+                        {% endif %}
+                        , {{ voter.residential_zipcode }}
+                    </div>
+                    <div>
+                        DOB:
+                        {% if voter.date_of_birth %}
+                            {{ voter.date_of_birth|date:"Y-m-d" }}
+                        {% else %}
+                            (unknown)
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="voter-right">
+                    <div>Party: {{ voter.party_affiliation }}</div>
+                    <div>Score: {{ voter.voter_score }}</div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No voters matched your filters.</p>
+        {% endfor %}
+    </section>
+
+    <!-- PAGINATION -->
+    <section class="pagination">
+
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if querystring_without_page %}&{{ querystring_without_page }}{% endif %}">
+                Previous
+            </a>
+        {% endif %}
+    
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+    
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if querystring_without_page %}&{{ querystring_without_page }}{% endif %}">
+                Next
+            </a>
+        {% endif %}
+    
+    </section>
+    
+
+{% endblock %}

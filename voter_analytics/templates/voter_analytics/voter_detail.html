@@ -1,0 +1,89 @@
+<!--File: voter_detail.html
+ Author: Run Liu (lr0826@bu.edu), 9/24/2025
+Description: the detail page of a voter -->
+{% extends "voter_analytics/base.html" %}
+
+{% block title %}{{ voter.first_name }} {{ voter.last_name }} · Voter Details{% endblock %}
+
+{% block content %}
+
+    <section class="section-block panel">
+        <h2>Basic Info</h2>
+        <dl>
+            <dt>Name</dt>
+            <dd>{{ voter.first_name }} {{ voter.last_name }}</dd>
+
+            <dt>Address</dt>
+            <dd>
+                {{ voter.residential_street_number }} {{ voter.residential_street_name }}
+                {% if voter.residential_apartment_number %}
+                    Apt {{ voter.residential_apartment_number }}
+                {% endif %}
+                , {{ voter.residential_zipcode }}
+            </dd>
+
+            <dt>Precinct</dt>
+            <dd>{{ voter.precinct_number }}</dd>
+
+            <dt>Date of Birth</dt>
+            <dd>
+                {% if voter.date_of_birth %}
+                    {{ voter.date_of_birth|date:"Y-m-d" }}
+                {% else %}
+                    (unknown)
+                {% endif %}
+            </dd>
+
+            <dt>Date of Registration</dt>
+            <dd>
+                {% if voter.date_of_registration %}
+                    {{ voter.date_of_registration|date:"Y-m-d" }}
+                {% else %}
+                    (unknown)
+                {% endif %}
+            </dd>
+
+            <dt>Party Affiliation</dt>
+            <dd>{{ voter.party_affiliation }}</dd>
+
+            <dt>Voter Score</dt>
+            <dd>{{ voter.voter_score }}</dd>
+        </dl>
+    </section>
+
+    <section class="section-block panel">
+        <h2>Election Participation</h2>
+        <dl>
+            <dt>2020 State</dt>
+            <dd>{{ voter.v20state }}</dd>
+
+            <dt>2021 Town</dt>
+            <dd>{{ voter.v21town }}</dd>
+
+            <dt>2021 Primary</dt>
+            <dd>{{ voter.v21primary }}</dd>
+
+            <dt>2022 General</dt>
+            <dd>{{ voter.v22general }}</dd>
+
+            <dt>2023 Town</dt>
+            <dd>{{ voter.v23town }}</dd>
+        </dl>
+    </section>
+
+    <section class="section-block panel">
+        <h2>Field Canvass</h2>
+    
+        <a class="button-link"
+           href="https://www.google.com/maps/search/?api=1&query={{ voter.residential_street_number|urlencode }}+{{ voter.residential_street_name|urlencode }}+{{ voter.residential_zipcode|urlencode }}"
+           target="_blank"
+           rel="noopener noreferrer">
+           View on Google Maps
+        </a>
+    
+        <div style="margin-top:1rem;">
+            <a href="{% url 'voters' %}">← Back to Voter List</a>
+        </div>
+    </section>
+    
+{% endblock %}
