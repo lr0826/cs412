@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Dad Joke</title>
+</head>
+<body>
+  <h1>Random Dad Joke</h1>
+
+  {% if joke %}
+    <h2>Joke</h2>
+    <p>{{ joke.text }}</p>
+    <p><em>— {{ joke.contributor_name }}</em></p>
+  {% else %}
+    <p>No jokes yet.</p>
+  {% endif %}
+
+  {% if picture %}
+    <h2>Picture</h2>
+    <img src="{{ picture.image_url }}" alt="Funny picture" style="max-width:400px;">
+    <p><em>— {{ picture.contributor_name }}</em></p>
+  {% else %}
+    <p>No pictures yet.</p>
+  {% endif %}
+
+  <p><a href="{% url 'dadjokes:random' %}">Show another random combo</a></p>
+  <p><a href="{% url 'dadjokes:jokes_list' %}">View all jokes</a> |
+     <a href="{% url 'dadjokes:pictures_list' %}">View all pictures</a></p>
+</body>
+</html>

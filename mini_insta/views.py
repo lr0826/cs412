@@ -228,7 +228,7 @@ class SearchView(LoginProfileMixin, ListView):
         self.query = (request.GET.get("q") or "").strip()
         if not self.query:
             # viewer_profile is set by the mixin before get() is called
-            return render(request, "mini_insta/search.html", {"profile": self.viewer_profile})
+            return render(request, "mini_insta/search.html", {"profile": self.viewer_profile}, )
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):

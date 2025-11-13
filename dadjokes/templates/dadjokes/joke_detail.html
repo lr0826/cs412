@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Joke {{ joke.pk }}</title>
+</head>
+<body>
+  <h1>Joke #{{ joke.pk }}</h1>
+
+  <p>{{ joke.text }}</p>
+  <p><em>— {{ joke.contributor_name }}, {{ joke.created_at }}</em></p>
+
+  <p><a href="{% url 'dadjokes:jokes_list' %}">Back to all jokes</a></p>
+  <p><a href="{% url 'dadjokes:home' %}">Back to random</a></p>
+</body>
+</html>
