@@ -27,6 +27,7 @@ urlpatterns = [
     path("mini_insta/", include("mini_insta.urls")),
     path("voter_analytics/", include("voter_analytics.urls")), 
     path('dadjokes', include('dadjokes.urls')),#new
+     path("project/", include("project.urls")), #final project
 
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

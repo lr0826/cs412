@@ -1,0 +1,30 @@
+<!--File: player_confirm_delete.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the player_confirm_delete.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}Delete Player: {{ object.first_name }} {{ object.last_name }}{% endblock %}
+
+{% block content %}
+<div class="card card-danger">
+    <h1>Delete Player</h1>
+
+    <p>
+        Are you sure you want to delete
+        <strong>{{ object.first_name }} {{ object.last_name }}</strong>?
+        This will also remove them from any fantasy team rosters.
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="button-row">
+            <button type="submit" class="button-link button-danger">
+                Yes, delete
+            </button>
+            <a href="{% url 'player_detail' object.pk %}" class="button-link button-secondary">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

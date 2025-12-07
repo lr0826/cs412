@@ -1,0 +1,36 @@
+<!--File: player_detail.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the player_detail.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}{{ player.first_name }} {{ player.last_name }} · Player{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>{{ player.first_name }} {{ player.last_name }}</h1>
+
+    <p><strong>Position:</strong> {{ player.get_position_display }}</p>
+    <p><strong>Era:</strong> {{ player.get_era_display }}</p>
+    <p><strong>Primary Team:</strong> {{ player.primary_team }}</p>
+    <p><strong>Overall Rating:</strong> {{ player.overall_rating }}</p>
+    <p><strong>Active:</strong> {{ player.is_active }}</p>
+
+    {% if player.image %}
+        <p>
+            <img src="{{ player.image.url }}" alt="{{ player }}" style="max-width: 250px; border-radius: 0.75rem;">
+        </p>
+    {% endif %}
+
+    <div class="button-row">
+        <a href="{% url 'player_update' player.pk %}" class="button-link">
+            Edit
+        </a>
+        <a href="{% url 'player_delete' player.pk %}" class="button-link button-secondary">
+            Delete
+        </a>
+        <a href="{% url 'player_list' %}" class="button-link button-secondary">
+            Back to players
+        </a>
+    </div>
+</div>
+{% endblock %}

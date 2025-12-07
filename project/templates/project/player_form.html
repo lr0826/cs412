@@ -1,0 +1,30 @@
+<!--File: player_form.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the player_form.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}
+    {% if object %}Edit Player: {{ object.first_name }} {{ object.last_name }}{% else %}Create Player{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>
+        {% if object %}Edit Player: {{ object.first_name }} {{ object.last_name }}{% else %}Create New Player{% endif %}
+    </h1>
+
+    <form method="post" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="button-row">
+            <button type="submit" class="button-link">
+                {% if object %}Save Changes{% else %}Create Player{% endif %}
+            </button>
+            <a href="{% url 'player_list' %}" class="button-link button-secondary">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

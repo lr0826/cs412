@@ -1,0 +1,68 @@
+<!--File: player_list.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the player_list.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}Players · NBA Fantasy Team Builder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Players</h1>
+
+    <form method="get" class="form">
+        {{ filter_form.as_p }}
+        <div class="button-row">
+            <button type="submit" class="button-link">Filter</button>
+            <a href="{% url 'player_list' %}" class="button-link button-secondary">Clear</a>
+            <!-- NEW: create player -->
+            <a href="{% url 'player_create' %}" class="button-link button-secondary">
+                + Create Player
+            </a>
+        </div>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Results</h2>
+    <ul>
+        {% for player in players %}
+            <li>
+                <a href="{% url 'player_detail' player.pk %}">
+                    {{ player.first_name }} {{ player.last_name }}
+                    ({{ player.position }}) – {{ player.primary_team }}
+                </a>
+            </li>
+        {% empty %}
+            <li>No players found.</li>
+        {% endfor %}
+    </ul>
+
+    {% if is_paginated %}
+        <div class="pagination">
+            <div class="pagination-buttons">
+                {% if page_obj.has_previous %}
+                    <a
+                        class="button-link button-secondary"
+                        href="?page={{ page_obj.previous_page_number }}{% if current_query %}&{{ current_query }}{% endif %}"
+                    >
+                        ‹ Previous
+                    </a>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <a
+                        class="button-link button-secondary"
+                        href="?page={{ page_obj.next_page_number }}{% if current_query %}&{{ current_query }}{% endif %}"
+                    >
+                        Next ›
+                    </a>
+                {% endif %}
+            </div>
+
+            <div class="pagination-info">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+<!--File: team_form.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the team_form.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}
+    {% if object %}Edit Team: {{ object.name }} · NBA Fantasy Team Builder{% else %}Create Fantasy Team · NBA Fantasy Team Builder{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>
+        {% if object %}Edit Team: {{ object.name }}{% else %}Create Fantasy Team{% endif %}
+    </h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">
+            {% if object %}Save Changes{% else %}Create Team{% endif %}
+        </button>
+        <a href="{% url 'team_list' %}" class="button-link button-secondary">
+            Back to teams
+        </a>
+    </form>
+</div>
+{% endblock %}
+

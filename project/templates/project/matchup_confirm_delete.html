@@ -1,0 +1,26 @@
+<!--File: matchup_confirm_delete.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the matchup_confirm_delete file-->
+{% extends "project/base.html" %}
+
+{% block title %}Delete Matchup · NBA Fantasy Team Builder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Delete Matchup</h1>
+
+    <p>
+        Are you sure you want to delete this matchup:
+        <strong>{{ object.home_team }} vs {{ object.away_team }}</strong>?
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+        <a href="{% url 'matchup_detail' object.pk %}" class="button-link button-secondary">
+            Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}
+

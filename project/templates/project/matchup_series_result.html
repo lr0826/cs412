@@ -1,0 +1,52 @@
+{% extends "project/base.html" %}
+
+{% block title %}
+    Series Result: {{ home_team.name }} vs {{ away_team.name }} · NBA Fantasy Team Builder
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Best-of-7 Series Simulation</h1>
+
+    <h2>{{ home_team.name }} vs {{ away_team.name }}</h2>
+
+    <p>
+        Final series result:
+        <strong>{{ series_winner.name }}</strong>
+        wins
+        {{ home_wins }}–{{ away_wins }}
+    </p>
+</div>
+
+<div class="card">
+    <h3>Game-by-game results</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Game</th>
+                <th>{{ home_team.name }} Score</th>
+                <th>{{ away_team.name }} Score</th>
+                <th>Winner</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in games %}
+                <tr>
+                    <td>{{ game.number }}</td>
+                    <td>{{ game.home_score }}</td>
+                    <td>{{ game.away_score }}</td>
+                    <td>{{ game.winner.name }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="card">
+    <p>
+        <a href="{% url 'matchup_detail' matchup.pk %}">Back to matchup</a> |
+        <a href="{% url 'matchup_list' %}">Back to all matchups</a>
+    </p>
+</div>
+{% endblock %}
+

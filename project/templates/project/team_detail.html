@@ -1,0 +1,45 @@
+{% extends "project/base.html" %}
+
+{% block title %}{{ team.name }} · Fantasy Team{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>{{ team.name }}</h1>
+    <p><strong>Owner:</strong> {{ team.owner_name }}</p>
+    <p>{{ team.description }}</p>
+</div>
+
+<div class="card">
+    <h2>Roster</h2>
+    <ul>
+        {% for membership in team.memberships.all %}
+            <li>
+                {{ membership.player.first_name }} {{ membership.player.last_name }}
+                ({{ membership.player.position }})
+                - {{ membership.get_role_display }}
+                {% if membership.jersey_number %}
+                    #{{ membership.jersey_number }}
+                {% endif %}
+                |
+                <a href="{% url 'membership_delete' membership.pk %}">Remove</a>
+            </li>
+        {% empty %}
+            <li>No players on this team yet.</li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <a href="{% url 'team_add_player' team.pk %}" class="button-link">+ Add player to this team</a>
+    </p>
+</div>
+
+<div class="card">
+    <p>
+        <a href="{% url 'team_update' team.pk %}">Edit this team</a> |
+        <a href="{% url 'team_delete' team.pk %}">Delete this team</a> |
+        <a href="{% url 'team_list' %}">Back to teams</a>
+    </p>
+</div>
+{% endblock %}
+
+

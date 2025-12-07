@@ -1,0 +1,27 @@
+<!--File: home.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the home.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}Home · NBA Fantasy Team Builder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Welcome</h1>
+    <p>
+        Build your own fantasy NBA teams using current and historical players,
+        then simulate single games or full best-of-7 playoff series.
+    </p>
+</div>
+
+<div class="card">
+    <h2>Get started</h2>
+    <ul>
+        <li><a href="{% url 'player_list' %}">Browse and filter players</a></li>
+        <li><a href="{% url 'team_list' %}">Create and manage fantasy teams</a></li>
+        <li><a href="{% url 'matchup_list' %}">Set up matchups and simulate series</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,37 @@
+<!--File: matchup_list.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the matchup_list.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}Matchups · NBA Fantasy Team Builder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Matchups</h1>
+
+    <p>
+        <a href="{% url 'matchup_create' %}" class="button-link">
+            + Create new matchup
+        </a>
+    </p>
+</div>
+
+<div class="card">
+    <h2>All matchups</h2>
+    <ul>
+        {% for matchup in matchups %}
+            <li>
+                <a href="{% url 'matchup_detail' matchup.pk %}">
+                    {{ matchup.series_name|default:"Matchup" }}
+                    – {{ matchup.home_team }} vs {{ matchup.away_team }}
+                </a>
+                · Status: {{ matchup.status }}
+            </li>
+        {% empty %}
+            <li>No matchups yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+

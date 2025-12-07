@@ -1,0 +1,44 @@
+<!--File: team_add_player.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the team_add_player.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}Add Player to {{ team.name }} · NBA Fantasy Team Builder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Add Player to {{ team.name }}</h1>
+
+    <p>Select a player, choose their role, and optionally set a jersey number.</p>
+
+    <!-- Search form (GET) -->
+    <form method="get">
+        <label for="player_query">Search players (name or team):</label>
+        <input
+            type="text"
+            id="player_query"
+            name="player_query"
+            value="{{ player_query }}"
+            placeholder="e.g. LeBron, Celtics, Curry"
+        >
+        <button type="submit" class="button-link button-secondary">Search</button>
+        <a href="." class="button-link button-secondary">Clear</a>
+    </form>
+</div>
+
+<div class="card">
+    <!-- Main add-to-team form (POST) -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Add to Roster</button>
+        <a href="{% url 'team_detail' team.pk %}" class="button-link button-secondary">
+            Back to team
+        </a>
+    </form>
+</div>
+{% endblock %}
+
+
+

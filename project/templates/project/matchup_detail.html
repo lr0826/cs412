@@ -1,0 +1,47 @@
+<!--File: matchup_detail.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the matchup_detail.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}{{ matchup.series_name|default:"Matchup" }} · NBA Fantasy Team Builder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>{{ matchup.series_name|default:"Matchup" }}</h1>
+
+    <p><strong>Teams:</strong> {{ matchup.home_team }} vs {{ matchup.away_team }}</p>
+    <p><strong>Status:</strong> {{ matchup.status }}</p>
+
+    {% if matchup.scheduled_date %}
+        <p><strong>Scheduled date:</strong> {{ matchup.scheduled_date }}</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>Result</h2>
+    {% if matchup.home_score is not None and matchup.away_score is not None %}
+        <p><strong>Score:</strong> {{ matchup.home_score }} – {{ matchup.away_score }}</p>
+        {% if matchup.winner %}
+            <p><strong>Winner:</strong> {{ matchup.winner }}</p>
+        {% endif %}
+    {% else %}
+        <p>No result yet. Simulate a game or a full series to see the outcome.</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <p>
+        <a href="{% url 'matchup_simulate' matchup.pk %}" class="button-link">
+            Simulate this matchup
+        </a>
+        <a href="{% url 'matchup_simulate_series' matchup.pk %}" class="button-link button-secondary">
+            Simulate best-of-7 series
+        </a>
+    </p>
+    <p>
+        <a href="{% url 'matchup_update' matchup.pk %}">Edit matchup</a> |
+        <a href="{% url 'matchup_delete' matchup.pk %}">Delete matchup</a> |
+        <a href="{% url 'matchup_list' %}">Back to matchups</a>
+    </p>
+</div>
+{% endblock %}

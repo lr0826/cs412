@@ -1,0 +1,35 @@
+<!--File: team_list.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the team_list.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}Fantasy Teams · NBA Fantasy Team Builder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Fantasy Teams</h1>
+
+    <p>
+        <a href="{% url 'team_create' %}" class="button-link">
+            + Create new fantasy team
+        </a>
+    </p>
+</div>
+
+<div class="card">
+    <h2>All teams</h2>
+    <ul>
+        {% for team in teams %}
+            <li>
+                <a href="{% url 'team_detail' team.pk %}">
+                    {{ team.name }} (Owner: {{ team.owner_name }})
+                </a>
+            </li>
+        {% empty %}
+            <li>No teams yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+

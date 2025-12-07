@@ -1,0 +1,27 @@
+<!--File: membership_confirm_delete.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the membership_confirm_delete.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}Remove Player from Team · NBA Fantasy Team Builder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Remove Player from Team</h1>
+
+    <p>
+        Are you sure you want to remove
+        <strong>{{ object.player.first_name }} {{ object.player.last_name }}</strong>
+        from
+        <strong>{{ object.team.name }}</strong>?
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, remove</button>
+        <a href="{% url 'team_detail' object.team.pk %}" class="button-link button-secondary">
+            Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}

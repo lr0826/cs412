@@ -1,0 +1,28 @@
+<!--File: matchup_form.html
+ Author: Run Liu (lr0826@bu.edu), 12/7/2025
+Description: the matchup_form.html file-->
+{% extends "project/base.html" %}
+
+{% block title %}
+    {% if object %}Edit Matchup · NBA Fantasy Team Builder{% else %}Create Matchup · NBA Fantasy Team Builder{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>
+        {% if object %}Edit Matchup{% else %}Create Matchup{% endif %}
+    </h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">
+            {% if object %}Save Changes{% else %}Create Matchup{% endif %}
+        </button>
+        <a href="{% url 'matchup_list' %}" class="button-link button-secondary">
+            Back to matchups
+        </a>
+    </form>
+</div>
+{% endblock %}
